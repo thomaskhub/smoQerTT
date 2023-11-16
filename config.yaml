@@ -1,0 +1,40 @@
+#
+# Default config file
+#
+tls:
+  enable_tls: false
+  tls_key: /..../key.pem
+  tls_crt: /.../cert.pem
+  listening: "127.0.0.1:1883"
+
+ws:
+  enable_tls: false
+  ws_key: /..../key.pem
+  ws_crt: /.../cert.pem
+  listening: "127.0.0.1:1884"
+
+ledger:
+  auth:
+    - username: backend_tls
+      password: test
+      allow: true
+    - username: services
+      password: 4321
+      allow: true
+    - username: websocket
+      password: 1234
+      allow: true
+  acl:
+    #only allow events on the websocket user
+    - username: "websocket"
+      filters:
+        "#": 0
+        "events/#": 1 #read only events
+    - username: backend_tls
+      filters:
+        "#": 0
+        "media-app/worker-node/cmd/#": 2
+        "media-app/worker-node/#": 1
+    - username: services
+      filters:
+        "#": 3
