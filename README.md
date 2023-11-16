@@ -12,3 +12,25 @@ The reason why we are using this is because we wanted a very small mqtt broker t
 reliable broker.
 
 [License: MIT](./LICENSE)
+
+## Run it in Docker
+
+This command runs docker with the default config. Must be adapted if config
+is changed e.g. ports.
+
+```bash
+git clone https://github.com/thomaskhub/smoqertt
+cd smoqertt
+
+docker build -t smoqertt .
+
+
+docker run \
+    -d \
+    --name smoqertt \
+    --restart always \
+    -p 1883:1883 \
+    -p 1884:1884 \
+    -v $(pwd)/config.yaml:/config.yaml \
+    smoqertt
+```
